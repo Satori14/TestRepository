@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8kBq+XYDOmhckAE1YecRXcBLVbBwtd3G25AlWAKZJHxOhtzPLprg6oCYOoH7/XIexrF09cgWW932c45H7q/xEg==",
+  "dgSpecHash": "uKmE+xRnJaMj7gavLP63fesACVj0cHOGNJe3tHJCWqkb3YAWRbkklwH1FpQ9oFI1v/qkknZSeC9P8yaYMwxuiw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\alex_\\source\\repos\\Testovoe\\Testovoe\\Testovoe.csproj",
+  "projectFilePath": "C:\\Users\\alex_\\Documents\\TestRepository\\Testovoe\\Testovoe.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alex_\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\alex_\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

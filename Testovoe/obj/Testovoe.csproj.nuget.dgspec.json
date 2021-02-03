@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alex_\\source\\repos\\Testovoe\\Testovoe\\Testovoe.csproj": {}
+    "C:\\Users\\alex_\\Documents\\TestRepository\\Testovoe\\Testovoe.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alex_\\source\\repos\\Testovoe\\Testovoe\\Testovoe.csproj": {
+    "C:\\Users\\alex_\\Documents\\TestRepository\\Testovoe\\Testovoe.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alex_\\source\\repos\\Testovoe\\Testovoe\\Testovoe.csproj",
+        "projectUniqueName": "C:\\Users\\alex_\\Documents\\TestRepository\\Testovoe\\Testovoe.csproj",
         "projectName": "Testovoe",
-        "projectPath": "C:\\Users\\alex_\\source\\repos\\Testovoe\\Testovoe\\Testovoe.csproj",
+        "projectPath": "C:\\Users\\alex_\\Documents\\TestRepository\\Testovoe\\Testovoe.csproj",
         "packagesPath": "C:\\Users\\alex_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alex_\\source\\repos\\Testovoe\\Testovoe\\obj\\",
+        "outputPath": "C:\\Users\\alex_\\Documents\\TestRepository\\Testovoe\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "G:\\Microsoft\\Xamarin\\NuGet\\",
