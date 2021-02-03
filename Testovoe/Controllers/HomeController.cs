@@ -72,11 +72,35 @@ namespace Testovoe.Controllers
 
             
         }
-
-        public IActionResult Privacy()
+        public IActionResult CreateClient() // добавление клиента
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateClient(Client client)
         {
 
-            return View();
+            //var model = new Client {};
+            //await db.SaveChangesAsync();
+            //return View(model);
+
+            _db.Clients.Add(client);
+            _db.SaveChangesAsync();
+            return RedirectToAction("ClientList");
+
+            //Client cl = new Client();
+            //cl.FirstName = client.FirstName;
+            //cl.PhoneNumber = client.PhoneNumber;
+            //cl.SecondName = "boris";
+            //db.Clients.Add(cl);
+            //db.SaveChangesAsync();
+            //return RedirectToAction("ClientList");
+        }
+
+        public IActionResult ClientList()
+        {
+            var clients =_db.Clients.ToList();
+            return View(clients);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,0 +1,25 @@
+﻿@using Testovoe.Models;
+@model IEnumerable<Client>;
+@{
+    ViewBag.Title = "Все пользователи";
+}
+<a asp-action="Create">Добавить пользователя</a>
+<table class="table">
+    <tr>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Телефон</td>
+        <td>Бонусы</td>
+        <td>Скидка</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.SecondName</td>
+            <td>@item.PhoneNumber</td>
+            <td>@item.BonusBalance</td>
+            <td>@item.Discount</td>
+        </tr>
+    }
+</table>
