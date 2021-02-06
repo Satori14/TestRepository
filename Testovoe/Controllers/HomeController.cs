@@ -74,28 +74,45 @@ namespace Testovoe.Controllers
         }
         public IActionResult CreateClient() // добавление клиента
         {
-            return View();
+            return View(_db.Clients.ToList());
         }
         [HttpPost]
-        public IActionResult CreateClient(Client client)
+        public async Task<IActionResult> CreateClient(Client client) //сохранение добавления
         {
-
-            //var model = new Client {};
-            //await db.SaveChangesAsync();
-            //return View(model);
-
             _db.Clients.Add(client);
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return RedirectToAction("ClientList");
+        }
 
+        public async Task<IActionResult> EditClient(int? id)  // редактирование клиента
+        {
+            if (id != null)
+            {
+                Client client = await _db.Clients.FirstOrDefaultAsync(p => p.Id == id);
+                if (client != null)
+                    return View(client);
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditClient(Client client)
+        {
             //Client cl = new Client();
             //cl.FirstName = client.FirstName;
             //cl.PhoneNumber = client.PhoneNumber;
-            //cl.SecondName = "boris";
-            //db.Clients.Add(cl);
-            //db.SaveChangesAsync();
-            //return RedirectToAction("ClientList");
+            //cl.SecondName = client.SecondName;
+            //cl.BonusBalance = client.BonusBalance;
+            //cl.Discount = client.Discount;
+            //cl.Id = client.Id;
+            //_db.Clients.Update(cl);
+            //await _db.SaveChangesAsync();
+            //return RedirectToAction("Index");
+
+            _db.Clients.Update(client);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
+
 
         public IActionResult ClientList()
         {

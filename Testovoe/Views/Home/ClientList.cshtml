@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Все пользователи";
 }
-<a asp-action="Create">Добавить пользователя</a>
+<a asp-action="CreateClient">Добавить пользователя</a>
 <table class="table">
     <tr>
         <td>Имя</td>
@@ -20,6 +20,10 @@
             <td>@item.PhoneNumber</td>
             <td>@item.BonusBalance</td>
             <td>@item.Discount</td>
+            <td> 
+                @*<a asp-action="EditClient" asp-controller="Home" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="DeleteClient" asp-controller="Home" asp-route-id="@item.Id">Удалить</a>*@
+            </td>
         </tr>
     }
 </table>
