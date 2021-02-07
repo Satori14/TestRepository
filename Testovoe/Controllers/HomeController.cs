@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Testovoe.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Testovoe.Controllers
 {
@@ -22,6 +23,7 @@ namespace Testovoe.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             //var user = new User
@@ -60,12 +62,25 @@ namespace Testovoe.Controllers
             //    Cost = 1000
             //});
             //_db.SaveChanges();
+            //return Content(User.Identity.Name);
 
-            var deals = _db.Deals
+            if (User.Identity.IsAuthenticated)
+            {
+                var deals = _db.Deals
                 .Include(x => x.User)
                 .Include(x => x.Client)
                 .Where(x => !x.IsDeleted);
-            return View(deals);
+                return View(deals);
+            }
+            return Content("не аутентифицирован");
+
+
+
+            //var deals = _db.Deals
+            //    .Include(x => x.User)
+            //    .Include(x => x.Client)
+            //    .Where(x => !x.IsDeleted);
+            //return View(deals);
 
 
         }
@@ -122,6 +137,7 @@ namespace Testovoe.Controllers
 
         public IActionResult NewDeal()
         {
+            //return Content(User.Identity.Name);
             return View();
         }
     }

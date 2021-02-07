@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Testovoe.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 namespace Testovoe
 {
@@ -25,6 +27,17 @@ namespace Testovoe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ApplicationContext>();
+
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+            /// установка конфигурации подключения
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
+            ///-- установка конфигурации подключения
+
             services.AddControllersWithViews();
         }
 
@@ -41,12 +54,16 @@ namespace Testovoe
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseAuthorization(); // авторизация
 
             app.UseEndpoints(endpoints =>
             {
