@@ -1,9 +1,9 @@
 ﻿@using Testovoe.Models;
 @model IEnumerable<Client>;
 @{
-    ViewBag.Title = "Все пользователи";
+    ViewBag.Title = "Все клиенты";
 }
-<a asp-action="CreateClient">Добавить пользователя</a>
+<a asp-action="CreateClient">Добавить клиента</a>
 <table class="table">
     <tr>
         <td>Имя</td>
@@ -20,8 +20,9 @@
             <td>@item.PhoneNumber</td>
             <td>@item.BonusBalance</td>
             <td>@item.Discount</td>
-            <td> 
+            <td>
                 <a asp-action="EditClient" asp-controller="Home" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="NewDeal" asp-controller="Home" asp-route-id="@item.Id">Добавить в чек</a>
                 @*<a asp-action="DeleteClient" asp-controller="Home" asp-route-id="@item.Id">Удалить</a>*@
             </td>
         </tr>

@@ -2,27 +2,42 @@
 @{
     ViewBag.Title = "Добавление Чека";
 }
-<form asp-action="NewDeal" asp-controller="home">
-    <!--<div class="form-group">
-        <label asp-for="FirstName" class="control-label">Имя</label>
-        <input type="text" asp-for="FirstName" class="form-control" />
+<a asp-action="ClientList">Список клиентов</a> |
+<form asp-action="NewDeal1" asp-controller="home">
+    <div class="form-group">
+        <label asp-for="User" class="control-label">Имя пользователя</label>
+        <input type="text" asp-for="User" class="form-control" value="@User.Identity.Name" />
     </div>
     <div class="form-group">
-        <label asp-for="SecondName" class="control-label">Фамилия</label>
-        <input type="text" asp-for="SecondName" class="form-control" />
+        <label asp-for="Date" class="control-label">Дата</label>
+        <input type="text" asp-for="Date" class="form-control" value="@Model.Date" />
     </div>
     <div class="form-group">
-        <label asp-for="PhoneNumber" class="control-label">Телефон</label>
-        <input type="number" asp-for="PhoneNumber" class="form-control" />
-    </div>-->
-    @*<div class="form-group">
-            <label asp-for="BonusBalance" class="control-label">Бонусы</label>
-            <input type="number" asp-for="BonusBalance" class="form-control" />
-        </div>*@
-    <!--<div class="form-group">
-        <label asp-for="Discount" class="control-label">Скидка </label>
-        <input type="number" asp-for="Discount" class="form-control" />
-    </div>-->
+        <label asp-for="UserId" class="control-label">Имя пользователя</label>
+        <input type="text" asp-for="UserId" class="form-control" value="@ViewBag.UN" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClientId" class="control-label">ИД клиента</label>
+        <input type="text" asp-for="ClientId" class="form-control" value="@Model.ClientId" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AmountOfPurchase" class="control-label">Вышло</label>
+        <input type="text" asp-for="AmountOfPurchase" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="TransactionAmout" class="control-label">Итого</label>
+        <input type="text" asp-for="TransactionAmout" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="UpBonus" class="control-label">Будет начислено</label>
+        <input type="text" asp-for="UpBonus" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="DownBonus" class="control-label">Списать бонусы</label>
+        <input type="text" asp-for="DownBonus" class="form-control" />
+    </div>
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn btn-default" />
     </div>

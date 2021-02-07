@@ -87,6 +87,7 @@ namespace Testovoe.Controllers
         public IActionResult CreateClient() // добавление клиента
         {
             //return View(_db.Clients.ToList()); 
+            
             return View();
         }
         [HttpPost]
@@ -125,6 +126,7 @@ namespace Testovoe.Controllers
 
         public IActionResult ClientList()
         {
+            
             var clients =_db.Clients.ToList().Where(x => !x.IsDeleted);
             return View(clients);
         }
@@ -135,10 +137,32 @@ namespace Testovoe.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult NewDeal()
+        public async Task<IActionResult> NewDeal(int id)
         {
-            //return Content(User.Identity.Name);
-            return View();
+            string username = User.Identity.Name;
+            User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
+            var deal = new Deal
+            {
+                ClientId = id,
+                UserId = user.Id,
+                IsDeleted = false,
+                Date = DateTime.Now
+
+            };
+            ViewBag.UN = user.FirstName + " " + user.SecondName;
+            //var clients = _db.Clients.ToList().Where(x => !x.IsDeleted);
+            return View(deal);
+        }
+
+        public async Task<IActionResult> NewDeal1(Deal deal)
+        {
+            string username = User.Identity.Name;
+            User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
+            deal.UserId = user.Id;
+            //deal.ClientId = 2;
+            _db.Deals.Add(deal);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
