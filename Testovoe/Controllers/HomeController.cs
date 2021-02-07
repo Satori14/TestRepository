@@ -84,6 +84,7 @@ namespace Testovoe.Controllers
             return RedirectToAction("ClientList");
         }
 
+
         public async Task<IActionResult> EditClient(int? id)  // редактирование клиента
         {
             if (id != null)
@@ -97,20 +98,15 @@ namespace Testovoe.Controllers
         [HttpPost]
         public async Task<IActionResult> EditClient(Client client)
         {
-            //Client cl = new Client();
-            //cl.FirstName = client.FirstName;
-            //cl.PhoneNumber = client.PhoneNumber;
-            //cl.SecondName = client.SecondName;
-            //cl.BonusBalance = client.BonusBalance;
-            //cl.Discount = client.Discount;
-            //cl.Id = client.Id;
-            //_db.Clients.Update(cl);
-            //await _db.SaveChangesAsync();
-            //return RedirectToAction("Index");
-
-            _db.Clients.Update(client);
+            Client client1 = await _db.Clients.FirstOrDefaultAsync(p => p.Id == client.Id);
+            client1.FirstName = client.FirstName;
+            client1.PhoneNumber = client.PhoneNumber;
+            client1.SecondName = client.SecondName;
+            client1.BonusBalance = client.BonusBalance;
+            client1.Discount = client.Discount;
+            _db.Clients.Update(client1);
             await _db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("ClientList");
         }
 
 
