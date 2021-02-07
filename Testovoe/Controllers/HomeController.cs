@@ -24,32 +24,23 @@ namespace Testovoe.Controllers
 
         public IActionResult Index()
         {
-            //_db.Users.Add(new User
+            //var user = new User
             //{
-            //    Login = "sdgd",
-            //    Password = "sad",
-            //    FirstName = "kilu",
-            //    SecondName = "dfdhrh"
-            //});
-            //_db.SaveChanges();
-            //var users = _db.Users.ToList();
-            //return View(users);
-
-            // var user =  new User
-            // {
-            //     FirstName = "f",
-            //     SecondName = "t",
-            //     Login = "ttt",
-            //     Password = "123"
-            // };
+            //    FirstName = "Bill",
+            //    SecondName = "Bi",
+            //    Login = "111",
+            //    IsDeleted = false,
+            //    Password = "222"
+            //};
 
             //var client = new Client
             //{
             //    BonusBalance = 8,
             //    Discount = 6,
-            //    FirstName = "ccc",
+            //    FirstName = "Alex",
+            //    IsDeleted = false,
             //    PhoneNumber = 99999,
-            //    SecondName = "cc"
+            //    SecondName = "Al"
             //};
             //_db.Deals.Add(new Deal
             //{
@@ -58,9 +49,15 @@ namespace Testovoe.Controllers
             //    IsDeleted = false,
             //    Date = DateTime.Now,
             //    DownBonus = 5,
-            //    AmountOfPurchase = 2,
-            //    TransactionAmout = 1,
+            //    AmountOfPurchase = 995,
+            //    TransactionAmout = 1000,
             //    UpBonus = 2,
+            //});
+            //_db.Products.Add(new Product
+            //{
+            //    DealId = 1,
+            //    ProductName = "игра",
+            //    Cost = 1000
             //});
             //_db.SaveChanges();
 
@@ -70,11 +67,12 @@ namespace Testovoe.Controllers
                 .Where(x => !x.IsDeleted);
             return View(deals);
 
-            
+
         }
         public IActionResult CreateClient() // добавление клиента
         {
-            return View(_db.Clients.ToList());
+            //return View(_db.Clients.ToList()); 
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> CreateClient(Client client) //сохранение добавления
@@ -112,7 +110,7 @@ namespace Testovoe.Controllers
 
         public IActionResult ClientList()
         {
-            var clients =_db.Clients.ToList();
+            var clients =_db.Clients.ToList().Where(x => !x.IsDeleted);
             return View(clients);
         }
 
@@ -120,6 +118,11 @@ namespace Testovoe.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult NewDeal()
+        {
+            return View();
         }
     }
 }

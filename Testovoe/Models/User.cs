@@ -15,5 +15,6 @@ namespace Testovoe.Models
         public string Password { get; set; } // Пароль пользователя
         public string FirstName { get; set; } // Имя пользователя
         public string SecondName { get; set; } // Фамилия пользователя
+        public bool IsDeleted { get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace Testovoe.Models
         public int PhoneNumber { get; set; } // телефон клиента
         public int BonusBalance { get; set; } // бонусы клиента
         public int Discount { get; set; } // скидка клиента
+        public bool IsDeleted { get; set; }
     }
 }

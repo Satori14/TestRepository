@@ -8,9 +8,9 @@ namespace Testovoe.Models
     public class Product
     {
         public int Id { get; set; }
-        public string DealId { get; set; } // ИД сделки
-        //
+        public int DealId { get; set; } // ИД сделки
+        public Deal Deal { get; set; }
         public string ProductName { get; set; } // Наименование товара
-        public string Cost { get; set; } // Цена товара
+        public int Cost { get; set; } // Цена товара
     }
 }
