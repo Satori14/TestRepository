@@ -28,21 +28,20 @@ namespace Testovoe.Controllers
         {
             //var user = new User
             //{
-            //    FirstName = "Bill",
-            //    SecondName = "Bi",
-            //    Login = "111",
+            //    FirstName = "Hoakin",
+            //    SecondName = "Ho",
+            //    Login = "11111",
             //    IsDeleted = false,
-            //    Password = "222"
+            //    Password = "22222"
             //};
 
             //var client = new Client
             //{
             //    BonusBalance = 8,
-            //    Discount = 6,
-            //    FirstName = "Alex",
+            //    FirstName = "Uinston",
             //    IsDeleted = false,
             //    PhoneNumber = 99999,
-            //    SecondName = "Al"
+            //    SecondName = "Ui"
             //};
             //_db.Deals.Add(new Deal
             //{
@@ -55,12 +54,7 @@ namespace Testovoe.Controllers
             //    TransactionAmout = 1000,
             //    UpBonus = 2,
             //});
-            //_db.Products.Add(new Product
-            //{
-            //    DealId = 1,
-            //    ProductName = "игра",
-            //    Cost = 1000
-            //});
+
             //_db.SaveChanges();
             //return Content(User.Identity.Name);
 
@@ -73,16 +67,6 @@ namespace Testovoe.Controllers
                 return View(deals);
             }
             return Content("не аутентифицирован");
-
-
-
-            //var deals = _db.Deals
-            //    .Include(x => x.User)
-            //    .Include(x => x.Client)
-            //    .Where(x => !x.IsDeleted);
-            //return View(deals);
-
-
         }
         public IActionResult CreateClient() // добавление клиента
         {
@@ -117,7 +101,6 @@ namespace Testovoe.Controllers
             client1.PhoneNumber = client.PhoneNumber;
             client1.SecondName = client.SecondName;
             client1.BonusBalance = client.BonusBalance;
-            client1.Discount = client.Discount;
             _db.Clients.Update(client1);
             await _db.SaveChangesAsync();
             return RedirectToAction("ClientList");
@@ -139,15 +122,13 @@ namespace Testovoe.Controllers
         public class Transaction 
         {
             public int clientId;
-            public bool isDelited;
             public DateTime date;
             public int userId;
             public bool isDeleted;
             public int amountOfPurchase;
             public int upBonus; 
             public int downBonus;
-            public int transactionAmout;
-            public int discount;
+            public int transactionAmout { get; set; }
             public int bonusBalance;
             public string clientFirstName;
             public string clientSecondName;
@@ -155,6 +136,7 @@ namespace Testovoe.Controllers
             public string userFirstName;
             public string userSecondName;
             public string userFullName;
+            public int phoneNumber;
 
 
         }
@@ -164,31 +146,59 @@ namespace Testovoe.Controllers
             string username = User.Identity.Name;
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
             Client client = await _db.Clients.FirstOrDefaultAsync(x => x.Id == id);
-            Transaction t = new Transaction();
-            var deal = new Deal
+            Transaction t = new Transaction
             {
-                ClientId = id,
-                UserId = user.Id,
-                IsDeleted = false,
-                Date = DateTime.Now
-
+                userId = user.Id,
+                userFirstName = user.FirstName,
+                userSecondName = user.SecondName,
+                clientId = id,
+                clientFirstName = client.FirstName,
+                clientSecondName = client.SecondName,
+                bonusBalance = client.BonusBalance,
+                date = DateTime.Now,
+                clientFullName = client.FirstName + " " + client.SecondName,
+                userFullName = user.FirstName + " " + user.SecondName,
+                phoneNumber = client.PhoneNumber
             };
-            t.userId = user.Id;
-            t.userFirstName = user.FirstName;
-            t.userSecondName = user.SecondName;
-            t.clientId = id;
-            t.clientFirstName = client.FirstName;
-            t.clientSecondName = client.SecondName;
-            t.discount = client.Discount;
-            t.bonusBalance = client.BonusBalance;
-            t.date = DateTime.Now;
-            t.clientFullName= client.FirstName + " " + client.SecondName;
-            t.userFullName = user.FirstName + " " + user.SecondName;
-
-            ViewBag.UN = user.FirstName + " " + user.SecondName;
             return View(t);
         }
 
+        public async Task<IActionResult> NewDeal1(Transaction transaction)
+        {
+            string username = User.Identity.Name;
+            User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
+            Client client = _db.Clients.FirstOrDefault(p => p.Id == 2); //transaction.clientId);
+            client.BonusBalance +=transaction.upBonus-transaction.downBonus;
+            // client.FirstName = transaction.clientFirstName;
+            // client.IsDeleted = false;
+            //client.PhoneNumber = transaction.phoneNumber;
+            //client.SecondName = transaction.clientSecondName;
+
+            //_db.Clients.Update(client);
+            //var client = new Client
+            //{
+            //    Id = transaction.clientId,
+            //    BonusBalance = transaction.bonusBalance,
+            //    FirstName = transaction.clientFirstName,
+            //    IsDeleted = false,
+            //    PhoneNumber = transaction.phoneNumber,
+            //    SecondName = transaction.clientSecondName
+            //};
+            _db.Deals.Add(new Deal
+            {
+                Client = client,
+                User = user,
+                IsDeleted = false,
+                Date = transaction.date,
+                DownBonus = transaction.downBonus,
+                AmountOfPurchase = transaction.amountOfPurchase,
+                TransactionAmout = transaction.transactionAmout,
+                UpBonus = transaction.upBonus,
+            });
+            _db.Clients.Update(client);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
 
         //public async Task<IActionResult> NewDeal(int id)
         //{
@@ -205,15 +215,14 @@ namespace Testovoe.Controllers
         //    ViewBag.UN = user.FirstName + " " + user.SecondName;
         //    return View(deal);
         //}
-        public async Task<IActionResult> NewDeal1(Deal deal)
-        {
-            string username = User.Identity.Name;
-            User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
-            deal.UserId = user.Id;
-            //deal.ClientId = 2;
-            _db.Deals.Add(deal);
-            await _db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        //public async Task<IActionResult> NewDeal1(Deal deal)
+        //{
+        //    string username = User.Identity.Name;
+        //    User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
+        //    deal.UserId = user.Id;
+        //    _db.Deals.Add(deal);
+        //    await _db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
     }
 }

@@ -17,9 +17,8 @@ namespace Testovoe.ViewModels
 
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Пароль введен неверно")]
-
+        public string ConfirmPassword { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
-        public string ConfirmPassword { get; set; }
     }
 }

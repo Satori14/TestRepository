@@ -54,7 +54,7 @@ namespace Testovoe.Controllers
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    _db.Users.Add(new User { Login = model.Login, Password = model.Password, FirstName = model.FirstName, SecondName = model.SecondName });
+                    _db.Users.Add(new User { Login = model.Login, Password = model.Password, FirstName = model.FirstName, SecondName = model.SecondName, IsDeleted = false }); ;
                     await _db.SaveChangesAsync();
 
                     //await Authenticate(model.Login); // аутентификация

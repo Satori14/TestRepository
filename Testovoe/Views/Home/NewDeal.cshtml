@@ -17,22 +17,25 @@
     <div class="form-group">
         <label>Бонусы клиента: @Model.bonusBalance</label>
     </div>
+    @*<div class="form-group">
+            <label asp-for="amountOfPurchase" class="control-label">Вышло</label>
+            <input type="text" asp-for="amountOfPurchase" class="form-control" />
+        </div>*@
     <div class="form-group">
-        <label asp-for="amountOfPurchase" class="control-label">Вышло</label>
-        <input type="text" asp-for="amountOfPurchase" class="form-control" />
+        <input type="text" asp-for="clientId" class="form-control" value="@Model.clientId" />
     </div>
-    <div class="form-group">
-        <label>Вышло</label>
-        <input id="x" type="number" value="0">
+    @*<div class="form-group">
+        <label asp-for="amountOfPurchase" class="control-label">Вышло</label>
+        <input id="x" type="number" value="0" asp-for="amountOfPurchase" class="form-control">
         <label>Со скидкой клиента</label>
         <input id="y" type="text" value="0" disabled>
         <script type="text/javascript">
             x.addEventListener('input', function () {
-                y.value = (this.value * @Model.discount).toFixed(2);
+                y.value = (this.value * 2.0).toFixed(2);
             });
 
         </script>
-    </div>
+    </div>*@
     <div class="form-group">
         <label id="ad" asp-for="transactionAmout" class="control-label">Итого</label>
         <input type="text" asp-for="transactionAmout" class="form-control" />

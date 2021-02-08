@@ -13,7 +13,6 @@ namespace Testovoe.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Deal> Deals { get; set; }
-        public DbSet<Product> Products { get; set; }
 
         private readonly IConfiguration Configuration;
         public ApplicationContext(IConfiguration configuration)
