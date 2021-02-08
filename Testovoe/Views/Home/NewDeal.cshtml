@@ -1,36 +1,49 @@
-﻿@model Testovoe.Models.Deal
+﻿@model Testovoe.Controllers.HomeController.Transaction
 @{
     ViewBag.Title = "Добавление Чека";
 }
-<a asp-action="ClientList">Список клиентов</a> |
+<a asp-action="ClientList">Выбрать клиента</a>
 <form asp-action="NewDeal1" asp-controller="home">
     <div class="form-group">
-        <label asp-for="Date" class="control-label">Дата</label>
-        <input type="text" asp-for="Date" class="form-control" value="@Model.Date" />
+        <label asp-for="date" class="control-label">Дата</label>
+        <input type="text" asp-for="date" class="form-control" value="@Model.date" />
     </div>
     <div class="form-group">
-        <label asp-for="UserId" class="control-label">Имя пользователя</label>
-        <input type="text" asp-for="UserId" class="form-control" value="@ViewBag.UN" />
+        <label>Имя пользователя: @Model.userFullName</label>
     </div>
     <div class="form-group">
-        <label asp-for="ClientId" class="control-label">ИД клиента</label>
-        <input type="text" asp-for="ClientId" class="form-control" value="@Model.ClientId" />
+        <label>Имя  клиента: @Model.clientFullName</label>
     </div>
     <div class="form-group">
-        <label asp-for="AmountOfPurchase" class="control-label">Вышло</label>
-        <input type="text" asp-for="AmountOfPurchase" class="form-control" />
+        <label>Бонусы клиента: @Model.bonusBalance</label>
     </div>
     <div class="form-group">
-        <label asp-for="TransactionAmout" class="control-label">Итого</label>
-        <input type="text" asp-for="TransactionAmout" class="form-control" />
+        <label asp-for="amountOfPurchase" class="control-label">Вышло</label>
+        <input type="text" asp-for="amountOfPurchase" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="UpBonus" class="control-label">Будет начислено</label>
-        <input type="text" asp-for="UpBonus" class="form-control" />
+        <label>Вышло</label>
+        <input id="x" type="number" value="0">
+        <label>Со скидкой клиента</label>
+        <input id="y" type="text" value="0" disabled>
+        <script type="text/javascript">
+            x.addEventListener('input', function () {
+                y.value = (this.value * @Model.discount).toFixed(2);
+            });
+
+        </script>
     </div>
     <div class="form-group">
-        <label asp-for="DownBonus" class="control-label">Списать бонусы</label>
-        <input type="text" asp-for="DownBonus" class="form-control" />
+        <label id="ad" asp-for="transactionAmout" class="control-label">Итого</label>
+        <input type="text" asp-for="transactionAmout" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="upBonus" class="control-label">Будет начислено</label>
+        <input type="text" asp-for="upBonus" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="downBonus" class="control-label">Списать бонусы</label>
+        <input type="text" asp-for="downBonus" class="form-control" />
     </div>
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn btn-default" />

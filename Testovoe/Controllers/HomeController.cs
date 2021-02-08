@@ -136,11 +136,35 @@ namespace Testovoe.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public class Transaction 
+        {
+            public int clientId;
+            public bool isDelited;
+            public DateTime date;
+            public int userId;
+            public bool isDeleted;
+            public int amountOfPurchase;
+            public int upBonus; 
+            public int downBonus;
+            public int transactionAmout;
+            public int discount;
+            public int bonusBalance;
+            public string clientFirstName;
+            public string clientSecondName;
+            public string clientFullName;
+            public string userFirstName;
+            public string userSecondName;
+            public string userFullName;
+
+
+        }
 
         public async Task<IActionResult> NewDeal(int id)
         {
             string username = User.Identity.Name;
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
+            Client client = await _db.Clients.FirstOrDefaultAsync(x => x.Id == id);
+            Transaction t = new Transaction();
             var deal = new Deal
             {
                 ClientId = id,
@@ -149,10 +173,38 @@ namespace Testovoe.Controllers
                 Date = DateTime.Now
 
             };
+            t.userId = user.Id;
+            t.userFirstName = user.FirstName;
+            t.userSecondName = user.SecondName;
+            t.clientId = id;
+            t.clientFirstName = client.FirstName;
+            t.clientSecondName = client.SecondName;
+            t.discount = client.Discount;
+            t.bonusBalance = client.BonusBalance;
+            t.date = DateTime.Now;
+            t.clientFullName= client.FirstName + " " + client.SecondName;
+            t.userFullName = user.FirstName + " " + user.SecondName;
+
             ViewBag.UN = user.FirstName + " " + user.SecondName;
-            //var clients = _db.Clients.ToList().Where(x => !x.IsDeleted);
-            return View(deal);
+            return View(t);
         }
+
+
+        //public async Task<IActionResult> NewDeal(int id)
+        //{
+        //    string username = User.Identity.Name;
+        //    User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
+        //    var deal = new Deal
+        //    {
+        //        ClientId = id,
+        //        UserId = user.Id,
+        //        IsDeleted = false,
+        //        Date = DateTime.Now
+
+        //    };
+        //    ViewBag.UN = user.FirstName + " " + user.SecondName;
+        //    return View(deal);
+        //}
         public async Task<IActionResult> NewDeal1(Deal deal)
         {
             string username = User.Identity.Name;
