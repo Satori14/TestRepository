@@ -153,7 +153,6 @@ namespace Testovoe.Controllers
             //var clients = _db.Clients.ToList().Where(x => !x.IsDeleted);
             return View(deal);
         }
-
         public async Task<IActionResult> NewDeal1(Deal deal)
         {
             string username = User.Identity.Name;

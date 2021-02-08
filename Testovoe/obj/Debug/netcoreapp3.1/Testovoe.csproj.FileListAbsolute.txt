@@ -204,4 +204,3 @@ C:\Users\alex_\Documents\TestRepository\Testovoe\obj\Debug\netcoreapp3.1\Razor\V
 C:\Users\alex_\Documents\TestRepository\Testovoe\obj\Debug\netcoreapp3.1\Razor\Views\Home\NewDeal.cshtml.g.cs
 C:\Users\alex_\Documents\TestRepository\Testovoe\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\alex_\Documents\TestRepository\Testovoe\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
-C:\Users\alex_\Documents\TestRepository\Testovoe\obj\Debug\netcoreapp3.1\Razor\Views\Home\SelectionClient.cshtml.g.cs

@@ -5,10 +5,6 @@
 <a asp-action="ClientList">Список клиентов</a> |
 <form asp-action="NewDeal1" asp-controller="home">
     <div class="form-group">
-        <label asp-for="User" class="control-label">Имя пользователя</label>
-        <input type="text" asp-for="User" class="form-control" value="@User.Identity.Name" />
-    </div>
-    <div class="form-group">
         <label asp-for="Date" class="control-label">Дата</label>
         <input type="text" asp-for="Date" class="form-control" value="@Model.Date" />
     </div>
@@ -16,12 +12,10 @@
         <label asp-for="UserId" class="control-label">Имя пользователя</label>
         <input type="text" asp-for="UserId" class="form-control" value="@ViewBag.UN" />
     </div>
-
     <div class="form-group">
         <label asp-for="ClientId" class="control-label">ИД клиента</label>
         <input type="text" asp-for="ClientId" class="form-control" value="@Model.ClientId" />
     </div>
-
     <div class="form-group">
         <label asp-for="AmountOfPurchase" class="control-label">Вышло</label>
         <input type="text" asp-for="AmountOfPurchase" class="form-control" />
