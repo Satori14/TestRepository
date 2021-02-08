@@ -70,8 +70,6 @@ namespace Testovoe.Controllers
         }
         public IActionResult CreateClient() // добавление клиента
         {
-            //return View(_db.Clients.ToList()); 
-            
             return View();
         }
         [HttpPost]
@@ -81,7 +79,6 @@ namespace Testovoe.Controllers
             await _db.SaveChangesAsync();
             return RedirectToAction("ClientList");
         }
-
 
         public async Task<IActionResult> EditClient(int? id)  // редактирование клиента
         {
@@ -93,6 +90,7 @@ namespace Testovoe.Controllers
             }
             return NotFound();
         }
+
         [HttpPost]
         public async Task<IActionResult> EditClient(Client client)
         {
@@ -106,10 +104,8 @@ namespace Testovoe.Controllers
             return RedirectToAction("ClientList");
         }
 
-
         public IActionResult ClientList()
         {
-            
             var clients =_db.Clients.ToList().Where(x => !x.IsDeleted);
             return View(clients);
         }
@@ -121,22 +117,22 @@ namespace Testovoe.Controllers
         }
         public class Transaction 
         {
-            public int clientId;
-            public DateTime date;
-            public int userId;
-            public bool isDeleted;
-            public int amountOfPurchase;
-            public int upBonus; 
-            public int downBonus;
+            public int clientId { get; set; }
+            public DateTime date { get; set; }
+            public int userId { get; set; }
+            public bool isDeleted { get; set; }
+            public int amountOfPurchase { get; set; }
+            public int upBonus { get; set; }
+            public int downBonus { get; set; }
             public int transactionAmout { get; set; }
-            public int bonusBalance;
-            public string clientFirstName;
-            public string clientSecondName;
-            public string clientFullName;
-            public string userFirstName;
-            public string userSecondName;
-            public string userFullName;
-            public int phoneNumber;
+            public int bonusBalance { get; set; }
+            public string clientFirstName { get; set; }
+            public string clientSecondName { get; set; }
+            public string clientFullName { get; set; }
+            public string userFirstName { get; set; }
+            public string userSecondName { get; set; }
+            public string userFullName { get; set; }
+            public int phoneNumber { get; set; }
 
 
         }
@@ -167,23 +163,8 @@ namespace Testovoe.Controllers
         {
             string username = User.Identity.Name;
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
-            Client client = _db.Clients.FirstOrDefault(p => p.Id == 2); //transaction.clientId);
+            Client client = _db.Clients.FirstOrDefault(p => p.Id == transaction.clientId);
             client.BonusBalance +=transaction.upBonus-transaction.downBonus;
-            // client.FirstName = transaction.clientFirstName;
-            // client.IsDeleted = false;
-            //client.PhoneNumber = transaction.phoneNumber;
-            //client.SecondName = transaction.clientSecondName;
-
-            //_db.Clients.Update(client);
-            //var client = new Client
-            //{
-            //    Id = transaction.clientId,
-            //    BonusBalance = transaction.bonusBalance,
-            //    FirstName = transaction.clientFirstName,
-            //    IsDeleted = false,
-            //    PhoneNumber = transaction.phoneNumber,
-            //    SecondName = transaction.clientSecondName
-            //};
             _db.Deals.Add(new Deal
             {
                 Client = client,
