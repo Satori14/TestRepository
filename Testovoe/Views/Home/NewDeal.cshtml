@@ -5,8 +5,7 @@
 <a asp-action="ClientList">Выбрать клиента</a>
 <form asp-action="NewDeal1" asp-controller="home">
     <div class="form-group">
-        <label asp-for="Date" class="control-label">Дата</label>
-        <input type="text" asp-for="Date" class="form-control" value="@Model.Date" />
+        <label>Дата: @Model.Date</label>
     </div>
     <div class="form-group">
         <label>Имя пользователя: @Model.UserFullName</label>
@@ -26,7 +25,7 @@
         <input id="bon" type="number" asp-for="DownBonus" class="form-control" value="0" />
     </div>
     <div class="form-group">
-        <input asp-for="ClientId" class="form-control" value="@Model.ClientId" hidden/>
+        <input asp-for="ClientId" class="form-control" value="@Model.ClientId" hidden />
     </div>
     <div class="form-group">
         <label>Итого</label>
@@ -41,11 +40,23 @@
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn btn-default" />
     </div>
+    <div id="div">
+        <input type="text" id="id0" name="value[]">
+    </div>
+    @*<input type="button" id="button" value="Создать">*@
     <script type="text/javascript">
+        //var count = 1;
+        //button.addEventListener("click", function () {
+        //    var input = document.createElement('INPUT');
+        //    input.type = 'text';
+        //    input.setAttribute("id", "id" + count);
+        //    input.name = "value[]";
+        //    document.querySelector('#div').appendChild(input);
+        //    count++;
+        //});
         bon.addEventListener('input', sum);
         summ.addEventListener('input', sum);
-        function sum()
-        {
+        function sum() {
             var a = parseInt(document.getElementById('summ').value);
             var b = parseInt(document.getElementById('bon').value);
             var c = a - b;

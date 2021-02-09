@@ -34,7 +34,7 @@ namespace Testovoe.Controllers
             //    IsDeleted = false,
             //    Password = "22222"
             //};
-
+                                                    //<<---- Оставил на случай, если надо будет пересоздать базу
             //var client = new Client
             //{
             //    BonusBalance = 8,
@@ -92,7 +92,7 @@ namespace Testovoe.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditClient(Client client)
+        public async Task<IActionResult> EditClient(Client client)// редактирование клиента
         {
             Client client1 = await _db.Clients.FirstOrDefaultAsync(p => p.Id == client.Id);
             client1.FirstName = client.FirstName;
@@ -137,7 +137,7 @@ namespace Testovoe.Controllers
 
         }
 
-        public async Task<IActionResult> NewDeal(int id)
+        public async Task<IActionResult> NewDeal(int id) // Добавление нового чека
         {
             string username = User.Identity.Name;
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
@@ -159,7 +159,7 @@ namespace Testovoe.Controllers
             return View(t);
         }
 
-        public async Task<IActionResult> NewDeal1(Transaction transaction)
+        public async Task<IActionResult> NewDeal1(Transaction transaction) // Добавление нового чека
         {
             string username = User.Identity.Name;
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
@@ -170,7 +170,7 @@ namespace Testovoe.Controllers
                 Client = client,
                 User = user,
                 IsDeleted = false,
-                Date = transaction.Date,
+                Date = DateTime.Now,
                 DownBonus = transaction.DownBonus,
                 AmountOfPurchase = transaction.AmountOfPurchase,
                 TransactionAmout = transaction.TransactionAmout,
@@ -180,30 +180,5 @@ namespace Testovoe.Controllers
             await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
-        //public async Task<IActionResult> NewDeal(int id)
-        //{
-        //    string username = User.Identity.Name;
-        //    User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
-        //    var deal = new Deal
-        //    {
-        //        ClientId = id,
-        //        UserId = user.Id,
-        //        IsDeleted = false,
-        //        Date = DateTime.Now
-
-        //    };
-        //    ViewBag.UN = user.FirstName + " " + user.SecondName;
-        //    return View(deal);
-        //}
-        //public async Task<IActionResult> NewDeal1(Deal deal)
-        //{
-        //    string username = User.Identity.Name;
-        //    User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
-        //    deal.UserId = user.Id;
-        //    _db.Deals.Add(deal);
-        //    await _db.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
     }
 }
