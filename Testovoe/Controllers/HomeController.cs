@@ -117,22 +117,22 @@ namespace Testovoe.Controllers
         }
         public class Transaction 
         {
-            public int clientId { get; set; }
-            public DateTime date { get; set; }
-            public int userId { get; set; }
-            public bool isDeleted { get; set; }
-            public int amountOfPurchase { get; set; }
-            public int upBonus { get; set; }
-            public int downBonus { get; set; }
-            public int transactionAmout { get; set; }
-            public int bonusBalance { get; set; }
-            public string clientFirstName { get; set; }
-            public string clientSecondName { get; set; }
-            public string clientFullName { get; set; }
-            public string userFirstName { get; set; }
-            public string userSecondName { get; set; }
-            public string userFullName { get; set; }
-            public int phoneNumber { get; set; }
+            public int ClientId { get; set; }
+            public DateTime Date { get; set; }
+            public int UserId { get; set; }
+            public bool IsDeleted { get; set; }
+            public int AmountOfPurchase { get; set; }
+            public int UpBonus { get; set; }
+            public int DownBonus { get; set; }
+            public int TransactionAmout { get; set; }
+            public int BonusBalance { get; set; }
+            public string ClientFirstName { get; set; }
+            public string ClientSecondName { get; set; }
+            public string ClientFullName { get; set; }
+            public string UserFirstName { get; set; }
+            public string UserSecondName { get; set; }
+            public string UserFullName { get; set; }
+            public int PhoneNumber { get; set; }
 
 
         }
@@ -144,17 +144,17 @@ namespace Testovoe.Controllers
             Client client = await _db.Clients.FirstOrDefaultAsync(x => x.Id == id);
             Transaction t = new Transaction
             {
-                userId = user.Id,
-                userFirstName = user.FirstName,
-                userSecondName = user.SecondName,
-                clientId = id,
-                clientFirstName = client.FirstName,
-                clientSecondName = client.SecondName,
-                bonusBalance = client.BonusBalance,
-                date = DateTime.Now,
-                clientFullName = client.FirstName + " " + client.SecondName,
-                userFullName = user.FirstName + " " + user.SecondName,
-                phoneNumber = client.PhoneNumber
+                UserId = user.Id,
+                UserFirstName = user.FirstName,
+                UserSecondName = user.SecondName,
+                ClientId = id,
+                ClientFirstName = client.FirstName,
+                ClientSecondName = client.SecondName,
+                BonusBalance = client.BonusBalance,
+                Date = DateTime.Now,
+                ClientFullName = client.FirstName + " " + client.SecondName,
+                UserFullName = user.FirstName + " " + user.SecondName,
+                PhoneNumber = client.PhoneNumber
             };
             return View(t);
         }
@@ -163,18 +163,18 @@ namespace Testovoe.Controllers
         {
             string username = User.Identity.Name;
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
-            Client client = _db.Clients.FirstOrDefault(p => p.Id == transaction.clientId);
-            client.BonusBalance +=transaction.upBonus-transaction.downBonus;
+            Client client = _db.Clients.FirstOrDefault(p => p.Id == transaction.ClientId);
+            client.BonusBalance +=transaction.UpBonus-transaction.DownBonus;
             _db.Deals.Add(new Deal
             {
                 Client = client,
                 User = user,
                 IsDeleted = false,
-                Date = transaction.date,
-                DownBonus = transaction.downBonus,
-                AmountOfPurchase = transaction.amountOfPurchase,
-                TransactionAmout = transaction.transactionAmout,
-                UpBonus = transaction.upBonus,
+                Date = transaction.Date,
+                DownBonus = transaction.DownBonus,
+                AmountOfPurchase = transaction.AmountOfPurchase,
+                TransactionAmout = transaction.TransactionAmout,
+                UpBonus = transaction.UpBonus,
             });
             _db.Clients.Update(client);
             await _db.SaveChangesAsync();

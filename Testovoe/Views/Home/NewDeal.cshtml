@@ -5,50 +5,53 @@
 <a asp-action="ClientList">Выбрать клиента</a>
 <form asp-action="NewDeal1" asp-controller="home">
     <div class="form-group">
-        <label asp-for="date" class="control-label">Дата</label>
-        <input type="text" asp-for="date" class="form-control" value="@Model.date" />
+        <label asp-for="Date" class="control-label">Дата</label>
+        <input type="text" asp-for="Date" class="form-control" value="@Model.Date" />
     </div>
     <div class="form-group">
-        <label>Имя пользователя: @Model.userFullName</label>
+        <label>Имя пользователя: @Model.UserFullName</label>
     </div>
     <div class="form-group">
-        <label>Имя  клиента: @Model.clientFullName</label>
+        <label>Имя  клиента: @Model.ClientFullName</label>
     </div>
     <div class="form-group">
-        <label>Бонусы клиента: @Model.bonusBalance</label>
+        <label>Бонусы клиента: @Model.BonusBalance</label>
     </div>
     <div class="form-group">
-            <label asp-for="amountOfPurchase" class="control-label">Вышло</label>
-            <input type="text" asp-for="amountOfPurchase" class="form-control" />
-        </div>
-    <div class="form-group">
-        <input type="hidden" asp-for="clientId" class="form-control" value="@Model.clientId" />
-    </div>
-    @*<div class="form-group">
-        <label asp-for="amountOfPurchase" class="control-label">Вышло</label>
-        <input id="x" type="number" value="0" asp-for="amountOfPurchase" class="form-control">
-        <label>Со скидкой клиента</label>
-        <input id="y" type="text" value="0" disabled>
-        <script type="text/javascript">
-            x.addEventListener('input', function () {
-                y.value = (this.value * 2.0).toFixed(2);
-            });
-
-        </script>
-    </div>*@
-    <div class="form-group">
-        <label id="ad" asp-for="transactionAmout" class="control-label">Итого</label>
-        <input type="text" asp-for="transactionAmout" class="form-control" />
+        <label asp-for="AmountOfPurchase" class="control-label">Сумма покупок</label>
+        <input id="summ" type="number" asp-for="AmountOfPurchase" class="form-control" value="0" />
     </div>
     <div class="form-group">
-        <label asp-for="upBonus" class="control-label">Будет начислено</label>
-        <input type="text" asp-for="upBonus" class="form-control" />
+        <label asp-for="DownBonus" class="control-label">Списать бонусы</label>
+        <input id="bon" type="number" asp-for="DownBonus" class="form-control" value="0" />
     </div>
     <div class="form-group">
-        <label asp-for="downBonus" class="control-label">Списать бонусы</label>
-        <input type="text" asp-for="downBonus" class="form-control" />
+        <input asp-for="ClientId" class="form-control" value="@Model.ClientId" hidden/>
+    </div>
+    <div class="form-group">
+        <label>Итого</label>
+        <input id="itog" type="text" class="form-control" disabled />
+        <input id="itog1" type="text" asp-for="TransactionAmout" class="form-control" hidden />
+    </div>
+    <div class="form-group">
+        <label asp-for="UpBonus" class="control-label">Будет начислено</label>
+        <input id="plus" type="text" class="form-control" disabled />
+        <input id="plus1" type="text" asp-for="UpBonus" class="form-control" hidden />
     </div>
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn btn-default" />
     </div>
+    <script type="text/javascript">
+        bon.addEventListener('input', sum);
+        summ.addEventListener('input', sum);
+        function sum()
+        {
+            var a = parseInt(document.getElementById('summ').value);
+            var b = parseInt(document.getElementById('bon').value);
+            var c = a - b;
+            var d = c * .05;
+            itog.value = itog1.value = c;
+            plus.value = plus1.value = d.toFixed();
+        }
+    </script>
 </form>
