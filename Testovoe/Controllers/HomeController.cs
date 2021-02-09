@@ -26,47 +26,51 @@ namespace Testovoe.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            //var user = new User
-            //{
-            //    FirstName = "Hoakin",
-            //    SecondName = "Ho",
-            //    Login = "11111",
-            //    IsDeleted = false,
-            //    Password = "22222"
-            //};
-                                                    //<<---- Оставил на случай, если надо будет пересоздать базу
-            //var client = new Client
-            //{
-            //    BonusBalance = 8,
-            //    FirstName = "Uinston",
-            //    IsDeleted = false,
-            //    PhoneNumber = 99999,
-            //    SecondName = "Ui"
-            //};
-            //_db.Deals.Add(new Deal
-            //{
-            //    User = user,
-            //    Client = client,
-            //    IsDeleted = false,
-            //    Date = DateTime.Now,
-            //    DownBonus = 5,
-            //    AmountOfPurchase = 995,
-            //    TransactionAmout = 1000,
-            //    UpBonus = 2,
-            //});
-
-            //_db.SaveChanges();
-            //return Content(User.Identity.Name);
-
             if (User.Identity.IsAuthenticated)
             {
-                var deals = _db.Deals
-                .Include(x => x.User)
-                .Include(x => x.Client)
-                .Where(x => !x.IsDeleted);
-                return View(deals);
+                Client client1 = _db.Clients.FirstOrDefault();
+                if (client1 != null)
+                {
+                    var deals = _db.Deals
+                    .Include(x => x.User)
+                    .Include(x => x.Client)
+                    .Where(x => !x.IsDeleted);
+                    return View(deals);
+                }
+                else
+                {
+                    string username = User.Identity.Name;
+                    User user = _db.Users.FirstOrDefault(p => p.Login == username);
+                    var client = new Client
+                    {
+                        BonusBalance = 0,
+                        FirstName = "Default",
+                        IsDeleted = false,
+                        PhoneNumber = 0,
+                        SecondName = "Client"
+                    };
+                    _db.Deals.Add(new Deal
+                    {
+                        User = user,
+                        Client = client,
+                        IsDeleted = false,
+                        Date = DateTime.Now,
+                        DownBonus = 5,
+                        AmountOfPurchase = 995,
+                        TransactionAmout = 1000,
+                        UpBonus = 2,
+                    });
+                    _db.SaveChanges();
+                    var deals = _db.Deals
+                    .Include(x => x.User)
+                    .Include(x => x.Client)
+                    .Where(x => !x.IsDeleted);
+                    return View(deals);
+                }
+
             }
-            return Content("не аутентифицирован");
+            else { return Content("не аутентифицирован"); }
+            
         }
         public IActionResult CreateClient() // добавление клиента
         {
@@ -137,17 +141,17 @@ namespace Testovoe.Controllers
 
         }
 
-        public async Task<IActionResult> NewDeal(int id) // Добавление нового чека
+        public async Task<IActionResult> NewDeal() // Добавление нового чека
         {
             string username = User.Identity.Name;
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
-            Client client = await _db.Clients.FirstOrDefaultAsync(x => x.Id == id);
+            Client client = await _db.Clients.FirstOrDefaultAsync(x => x.FirstName == "Default");
             Transaction t = new Transaction
             {
                 UserId = user.Id,
                 UserFirstName = user.FirstName,
                 UserSecondName = user.SecondName,
-                ClientId = id,
+                ClientId = client.Id,
                 ClientFirstName = client.FirstName,
                 ClientSecondName = client.SecondName,
                 BonusBalance = client.BonusBalance,
