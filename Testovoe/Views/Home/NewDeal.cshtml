@@ -40,20 +40,23 @@
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn btn-default" />
     </div>
-    @*<div id="div">
-        <input type="text" id="id0" name="value[]">
+    <div id="div">
+          <input type="number" id="id0" name="value[]">
     </div>
-    <input type="button" id="button" value="Создать">*@
+    <input type="button" id="button" value="Создать">
     <script type="text/javascript">
-        //var count = 1;
-        //button.addEventListener("click", function () {
-        //    var input = document.createElement('INPUT');
-        //    input.type = 'text';
-        //    input.setAttribute("id", "id" + count);
-        //    input.name = "value[]";
-        //    document.querySelector('#div').appendChild(input);
-        //    count++;
-        //});
+        var count = 1;
+        button.addEventListener("click", function () {
+            var input = document.createElement('INPUT');
+            input.type = 'number';
+            input.setAttribute("id", "id" + count);
+            input.name = "value[]";
+            document.querySelector('#div').appendChild(input);
+            summ.value = parseInt(document.getElementById('summ').value) + parseInt(document.getElementById('id' + (count - 1)).value);
+            sum();
+            count++;
+        });
+
         bon.addEventListener('input', sum);
         summ.addEventListener('input', sum);
         function sum() {
@@ -63,6 +66,6 @@
             var d = c * .05;
             itog.value = itog1.value = c;
             plus.value = plus1.value = d.toFixed();
-        }
+        };
     </script>
 </form>
