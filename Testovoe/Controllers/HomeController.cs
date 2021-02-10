@@ -141,11 +141,14 @@ namespace Testovoe.Controllers
 
         }
 
-        public async Task<IActionResult> NewDeal() // Добавление нового чека
+        public async Task<IActionResult> NewDeal(int? id) // Добавление нового чека
         {
             string username = User.Identity.Name;
+            Client client = new Client();
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
-            Client client = await _db.Clients.FirstOrDefaultAsync(x => x.FirstName == "Default");
+            if (id == null) { client = await _db.Clients.FirstOrDefaultAsync(x => x.FirstName == "Default"); }
+            else { client = await _db.Clients.FirstOrDefaultAsync(x => x.Id == id); }
+            
             Transaction t = new Transaction
             {
                 UserId = user.Id,
