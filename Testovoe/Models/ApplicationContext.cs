@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using MySQL.Data.EntityFrameworkCore;
 
 namespace Testovoe.Models
 {
@@ -22,7 +23,7 @@ namespace Testovoe.Models
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+            optionsBuilder.UseMySQL(Configuration["ConnectionStrings:DefaultConnection"]); // asdhasgdkldgkjawsdghadsjfkghaskjlgg
 
         }
 

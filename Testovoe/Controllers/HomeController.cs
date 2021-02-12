@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Testovoe.Models;
 using Microsoft.AspNetCore.Authorization;
+using MySQL.Data.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Testovoe.Controllers
 {
@@ -26,6 +27,45 @@ namespace Testovoe.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            //_db.Users.Add(new User
+            //{
+            //    Login = "111",
+            //    Password = "111",
+            //    FirstName = "Default",
+            //    IsDeleted = false,
+            //    SecondName = "User"
+            //});
+            //_db.Clients.Add(new Client
+            //{
+            //    BonusBalance = 0,
+            //    FirstName = "Default",
+            //    IsDeleted = false,
+            //    PhoneNumber = 0,
+            //    SecondName = "Client"
+            //});
+            //_db.Deals.Add(new Deal
+            //{
+            //    //User = user,
+            //    //Client = client,
+            //    UserId=1,
+            //    ClientId=1,
+            //    IsDeleted = false,
+            //    Date = DateTime.Now,
+            //    DownBonus = 5,
+            //    AmountOfPurchase = 995,
+            //    TransactionAmout = 1000,
+            //    UpBonus = 2,
+            //});
+            //_db.SaveChanges();
+            //return Content(User.Identity.Name);
+
+            //var deals = _db.Deals
+            //.Include(x => x.User)
+            //.Include(x => x.Client)
+            //.Where(x => !x.IsDeleted);
+            //return View(deals);
+
+
             if (User.Identity.IsAuthenticated)
             {
                 Client client1 = _db.Clients.FirstOrDefault();
@@ -70,7 +110,7 @@ namespace Testovoe.Controllers
 
             }
             else { return Content("не аутентифицирован"); }
-            
+
         }
         public IActionResult CreateClient() // добавление клиента
         {
@@ -144,12 +184,12 @@ namespace Testovoe.Controllers
         public async Task<IActionResult> NewDeal(int? id) // Добавление нового чека
         {
             string username = User.Identity.Name;
-            Client client = new Client();
             User user = await _db.Users.FirstOrDefaultAsync(p => p.Login == username);
+            Client client = new Client();
             if (id == null) { client = await _db.Clients.FirstOrDefaultAsync(x => x.FirstName == "Default"); }
             else { client = await _db.Clients.FirstOrDefaultAsync(x => x.Id == id); }
             
-            Transaction t = new Transaction
+            Transaction transaction = new Transaction
             {
                 UserId = user.Id,
                 UserFirstName = user.FirstName,
@@ -163,7 +203,7 @@ namespace Testovoe.Controllers
                 UserFullName = user.FirstName + " " + user.SecondName,
                 PhoneNumber = client.PhoneNumber
             };
-            return View(t);
+            return View(transaction);
         }
 
         public async Task<IActionResult> NewDeal1(Transaction transaction) // Добавление нового чека

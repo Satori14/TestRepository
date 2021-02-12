@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Testovoe.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using MySQL.Data.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Testovoe
 {
@@ -29,7 +31,7 @@ namespace Testovoe
             services.AddSingleton<ApplicationContext>();
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ApplicationContext>(options => options.UseMySQL(connection)); //ÔÛÂÀÔÛÀÔÖÛÀÛÀÂÔÛÀÐÀÐÔÛÎÀÐËÄÎÀÛÐÎËÔÛÐÀÔÎÛÀÐ
             /// óñòàíîâêà êîíôèãóðàöèè ïîäêëþ÷åíèÿ
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
@@ -47,6 +49,7 @@ namespace Testovoe
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {
@@ -54,7 +57,12 @@ namespace Testovoe
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            //
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+            //
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
